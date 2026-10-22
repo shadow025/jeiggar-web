@@ -57,13 +57,13 @@ const stmts = {
   resumen: db.prepare(`
     SELECT
       COUNT(*)                                                AS total,
-      SUM(estado = 'nuevo')                                   AS nuevos,
-      SUM(estado = 'en_proceso')                              AS en_proceso,
-      SUM(estado = 'atendido')                                AS atendidos,
-      SUM(tipo = 'cotizacion')                                AS cotizaciones,
-      SUM(tipo = 'alquiler')                                  AS alquileres,
-      SUM(tipo = 'contacto')                                  AS contactos,
-      SUM(creado_en >= strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-7 days')) AS ultimos_7_dias
+      COALESCE(SUM(estado = 'nuevo'), 0)                      AS nuevos,
+      COALESCE(SUM(estado = 'en_proceso'), 0)                 AS en_proceso,
+      COALESCE(SUM(estado = 'atendido'), 0)                   AS atendidos,
+      COALESCE(SUM(tipo = 'cotizacion'), 0)                   AS cotizaciones,
+      COALESCE(SUM(tipo = 'alquiler'), 0)                     AS alquileres,
+      COALESCE(SUM(tipo = 'contacto'), 0)                     AS contactos,
+      COALESCE(SUM(creado_en >= strftime('%Y-%m-%dT%H:%M:%fZ', 'now', '-7 days')), 0) AS ultimos_7_dias
     FROM leads
   `),
   // Para detectar envíos repetidos del mismo correo en poco tiempo
