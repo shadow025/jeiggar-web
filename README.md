@@ -20,7 +20,7 @@ Sin frameworks de frontend ni dependencias nativas: `npm install` solo trae `exp
 ```bash
 npm install
 cp .env.example .env     # y cambia ADMIN_TOKEN
-npm run dev              # http://localhost:3000  (recarga al guardar)
+npm run dev              # http://localhost:8000  (recarga al guardar)
 ```
 
 `npm start` para producción. La base de datos se crea sola en `data/jeiggar.db`.
