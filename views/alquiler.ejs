@@ -1,0 +1,62 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<%- include('partials/hero-interno', { hero: {
+  migas: [{ etiqueta: 'Alquiler de Equipos/Herramientas' }],
+  titulo: pagina.titulo,
+  lema: pagina.lema,
+  imagen: pagina.portada,
+  boton: { href: '/cotizar?servicio=alquiler', texto: '¡Contáctanos!' },
+} }) %>
+
+<section class="seccion" style="padding-top:0">
+  <div class="container">
+    <div class="catalogo-cabecera">
+      <p class="lead"><%= pagina.intro %></p>
+      <label class="buscador">
+        <%- icono('buscar', { size: 18 }) %>
+        <input type="search" id="buscar-herramienta" placeholder="Buscar herramientas, equipos..." autocomplete="off" aria-label="Buscar herramientas">
+      </label>
+    </div>
+    <div class="grid-herramientas" id="grid-herramientas">
+      <div class="tarjeta tarjeta-lema">
+        <%- icono('martillo', { size: 22 }) %>
+        <h2 class="h3"><%= pagina.lema %></h2>
+      </div>
+      <% pagina.herramientas.forEach((h) => { const msg = encodeURIComponent(`Hola JEIGGAR, quiero información para alquilar: ${h.nombre}.`); %>
+        <article class="tarjeta tarjeta-herramienta" data-nombre="<%= h.nombre.toLowerCase() %>">
+          <div class="tarjeta-herramienta__imagen"><img src="<%= h.imagen %>" alt="<%= h.nombre %>" loading="lazy" width="170" height="170"></div>
+          <div class="tarjeta-herramienta__pie">
+            <h3 class="h4"><%= h.nombre %></h3>
+            <div class="tarjeta-herramienta__acciones">
+              <a class="btn-circulo" href="/cotizar?equipo=<%= encodeURIComponent(h.nombre) %>" title="Solicitar cotización" aria-label="Cotizar <%= h.nombre %>"><%- icono('documento', { size: 18 }) %></a>
+              <a class="btn-circulo btn-circulo--whatsapp" href="<%= empresa.whatsappHref %>?text=<%= msg %>" target="_blank" rel="noopener" title="Consultar por WhatsApp" aria-label="WhatsApp: <%= h.nombre %>"><%- icono('whatsapp', { size: 20 }) %></a>
+            </div>
+          </div>
+        </article>
+      <% }) %>
+      <p class="sin-resultados oculto" id="sin-resultados">No encontramos equipos con ese nombre. Escríbenos por WhatsApp y te ayudamos a conseguirlo.</p>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="container">
+    <div class="panel">
+      <div class="cabecera-seccion">
+        <div class="texto"><h2 class="h2"><%= pagina.porQue.titulo %></h2><p class="lead"><%= pagina.porQue.texto %></p></div>
+        <a class="btn btn--primario" href="/cotizar?servicio=alquiler">¡Contáctanos! <%- icono('flecha', { size: 18 }) %></a>
+      </div>
+      <div class="panel__cuadricula panel__cuadricula--3" style="margin-top:8px">
+        <% pagina.porQue.items.forEach((it) => { %>
+          <div class="caracteristica">
+            <span class="icono-caja"><%- icono(it.icono, { size: 22 }) %></span>
+            <div class="caracteristica__texto"><h3 class="h4"><%= it.titulo %></h3><p><%= it.texto %></p></div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,64 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<%- include('partials/hero-interno', { hero: {
+  migas: [{ etiqueta: '¿Quiénes Somos?' }],
+  titulo: '¿Quiénes Somos?',
+  lema: pagina.lema,
+  imagen: pagina.portada,
+  boton: null,
+} }) %>
+
+<section class="seccion" style="padding-top:0">
+  <div class="container media">
+    <div class="media__texto">
+      <span class="eyebrow">JEIGGAR</span>
+      <p class="h3" style="font-weight:600;line-height:1.35"><%= pagina.intro %></p>
+      <ul class="lista-check">
+        <% pagina.puntos.forEach((p) => { %><li><%- icono('check', { size: 18 }) %><span><%= p %></span></li><% }) %>
+      </ul>
+    </div>
+    <div class="grid grid--2">
+      <article class="tarjeta tarjeta-info"><span class="icono-caja"><%- icono('medalla', { size: 22 }) %></span><h3 class="h3"><%= pagina.mision.titulo %></h3><p><%= pagina.mision.texto %></p></article>
+      <article class="tarjeta tarjeta-info"><span class="icono-caja"><%- icono('ojo', { size: 22 }) %></span><h3 class="h3"><%= pagina.vision.titulo %></h3><p><%= pagina.vision.texto %></p></article>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="container grid grid--2">
+    <div class="media__imagen"><img src="<%= pagina.mision.imagen %>" alt="Equipo JEIGGAR" loading="lazy" width="600" height="375"></div>
+    <div class="media__imagen"><img src="<%= pagina.vision.imagen %>" alt="Proyectos de construcción" loading="lazy" width="600" height="375"></div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="container">
+    <div class="cabecera-seccion"><div class="texto"><span class="eyebrow">Aliados</span><h2 class="h2"><%= pagina.aliados.titulo %></h2><p class="lead"><%= pagina.aliados.texto %></p></div></div>
+    <div class="aliados">
+      <% pagina.aliados.items.forEach((a) => { const ini = a.split(/\s+/).filter(w => w.length > 2).slice(0, 2).map(w => w[0]).join('').toUpperCase(); %>
+        <div class="tarjeta aliado"><span class="aliado__logo" aria-hidden="true"><%= ini %></span><strong><%= a %></strong></div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="container">
+    <div class="panel">
+      <span class="eyebrow">Valores</span>
+      <h2 class="h2 mt-16"><%= pagina.valores.titulo %></h2>
+      <div class="panel__cuadricula panel__cuadricula--3">
+        <% pagina.valores.items.forEach((v) => { %>
+          <div class="caracteristica">
+            <span class="icono-caja"><%- icono(v.icono, { size: 22 }) %></span>
+            <div class="caracteristica__texto"><h3 class="h4"><%= v.titulo %></h3><p><%= v.texto %></p></div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/cta', { cta: pagina.cta }) %>
+<%- include('partials/footer') %>

@@ -1,0 +1,47 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="hero-interno">
+  <div class="container">
+    <nav class="migas" aria-label="Migas de pan"><a href="/">JEIGGAR</a><%- icono('chevron_der', { size: 14 }) %><span aria-current="page">Servicios</span></nav>
+    <div class="hero-interno__texto mt-24" style="max-width:720px">
+      <span class="eyebrow"><%= empresa.nombreLargo %></span>
+      <h1 class="h1">Nuestros servicios</h1>
+      <p class="lead">Soluciones integrales en ingeniería, construcción, diseño y consultoría. Elige el servicio que necesitas y solicita tu cotización.</p>
+    </div>
+  </div>
+</section>
+
+<section class="seccion" style="padding-top:0">
+  <div class="container">
+    <div class="grid grid-servicios-indice">
+      <% site.servicios.forEach((s) => { %>
+        <article class="tarjeta tarjeta-servicio">
+          <div class="tarjeta-servicio__imagen"><img src="<%= s.imagenInicio || s.portada %>" alt="<%= s.nombre %>" loading="lazy" width="384" height="220"></div>
+          <div class="tarjeta-servicio__contenido">
+            <div class="tarjeta-servicio__cabecera">
+              <span class="icono-caja"><%- icono(s.icono, { size: 22 }) %></span>
+              <span class="btn-circulo" aria-hidden="true"><%- icono('flecha_diagonal', { size: 18 }) %></span>
+            </div>
+            <h2 class="h3"><a class="tarjeta-servicio__enlace" href="/servicios/<%= s.slug %>"><%= s.nombre %></a></h2>
+            <p class="small"><%= s.tarjetaInicio || s.lema %></p>
+          </div>
+        </article>
+      <% }) %>
+      <article class="tarjeta tarjeta-servicio">
+        <div class="tarjeta-servicio__imagen"><img src="<%= site.alquiler.portada %>" alt="Alquiler de equipos y herramientas" loading="lazy" width="384" height="220"></div>
+        <div class="tarjeta-servicio__contenido">
+          <div class="tarjeta-servicio__cabecera">
+            <span class="icono-caja"><%- icono('martillo', { size: 22 }) %></span>
+            <span class="btn-circulo" aria-hidden="true"><%- icono('flecha_diagonal', { size: 18 }) %></span>
+          </div>
+          <h2 class="h3"><a class="tarjeta-servicio__enlace" href="/alquiler">Alquiler de Equipos/Herramientas</a></h2>
+          <p class="small"><%= site.alquiler.intro.slice(0, 160) %>…</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/cta', { cta: site.inicio.cta }) %>
+<%- include('partials/footer') %>

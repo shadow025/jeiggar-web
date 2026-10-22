@@ -1,0 +1,87 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<%- include('partials/hero-interno', { hero: {
+  migas: [{ etiqueta: 'Contacto' }],
+  titulo: pagina.titulo,
+  lema: pagina.lema,
+  imagen: pagina.portada,
+  boton: null,
+} }) %>
+
+<section class="seccion" style="padding-top:0">
+  <div class="container">
+    <p class="lead" style="margin-bottom:24px"><%= pagina.intro %></p>
+    <div class="grid grid--4">
+      <% pagina.canales.forEach((c) => { %>
+        <article class="tarjeta canal">
+          <div class="canal__cabecera">
+            <span class="canal__icono canal__icono--<%= c.clave %>"><%- icono(c.clave, { size: 22 }) %></span>
+            <span class="btn-circulo" aria-hidden="true"><%- icono('flecha_diagonal', { size: 18 }) %></span>
+          </div>
+          <h2 class="h3"><a href="<%= c.href %>" target="_blank" rel="noopener"><%= c.titulo %></a></h2>
+          <p><%= c.texto %></p>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="container cotizar">
+    <div class="cotizar__lateral">
+      <div class="panel ubicacion__datos" style="padding:28px">
+        <span class="eyebrow">Contacto</span>
+        <h2 class="h2" style="margin:14px 0 20px">JEIGGAR ingeniería y construcción</h2>
+        <div class="caracteristica"><span class="icono-caja"><%- icono('ubicacion', { size: 20 }) %></span><p><%= empresa.direccion %></p></div>
+        <div class="caracteristica"><span class="icono-caja"><%- icono('telefono', { size: 20 }) %></span><a href="<%= empresa.telefonoHref %>"><%= empresa.telefono %></a></div>
+        <div class="caracteristica"><span class="icono-caja"><%- icono('correo', { size: 20 }) %></span><a href="mailto:<%= empresa.correo %>"><%= empresa.correo %></a></div>
+      </div>
+      <div class="ubicacion__mapa">
+        <iframe title="Mapa: <%= empresa.direccion %>" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=<%= encodeURIComponent(empresa.mapsQuery) %>&output=embed"></iframe>
+      </div>
+    </div>
+
+    <div class="panel cotizar__formulario">
+      <span class="eyebrow">Escríbenos</span>
+      <h2 class="h2" style="margin:14px 0 8px">Envíanos un mensaje</h2>
+      <p class="small" style="margin-bottom:24px">Te respondemos al correo o WhatsApp que nos dejes. Si buscas una cotización formal, usa el <a href="/cotizar" style="text-decoration:underline">formulario de cotización</a>.</p>
+
+      <form class="formulario" id="form-contacto" data-endpoint="/api/contacto" novalidate>
+        <input type="hidden" name="origen" value="contacto">
+        <div class="honeypot" aria-hidden="true"><label>Sitio web <input type="text" name="sitio_web" tabindex="-1" autocomplete="off"></label></div>
+        <div class="formulario__fila">
+          <div class="campo"><label for="c-nombre">Nombre completo <span class="req">*</span></label><input id="c-nombre" name="nombre" type="text" autocomplete="name" required><span class="error" data-error="nombre"></span></div>
+          <div class="campo"><label for="c-correo">Correo electrónico <span class="req">*</span></label><input id="c-correo" name="correo" type="email" autocomplete="email" required><span class="error" data-error="correo"></span></div>
+        </div>
+        <div class="formulario__fila">
+          <div class="campo"><label for="c-telefono">Teléfono / WhatsApp <span class="req">*</span></label><input id="c-telefono" name="telefono" type="tel" autocomplete="tel" placeholder="301 665 1308" required><span class="error" data-error="telefono"></span></div>
+          <div class="campo"><label for="c-servicio">Tema</label><select id="c-servicio" name="servicio"><option value="">Selecciona (opcional)</option><% site.opcionesServicio.forEach((o) => { %><option value="<%= o.valor %>"><%= o.etiqueta %></option><% }) %></select></div>
+        </div>
+        <div class="campo"><label for="c-mensaje">Mensaje <span class="req">*</span></label><textarea id="c-mensaje" name="mensaje" required minlength="10"></textarea><span class="error" data-error="mensaje"></span></div>
+        <div class="campo campo--check">
+          <input id="c-acepta" name="acepta_datos" type="checkbox" required>
+          <label for="c-acepta">Autorizo a <%= empresa.nombreLargo %> el tratamiento de mis datos personales conforme a la <a href="/politica-de-privacidad" target="_blank">Política de Privacidad</a> (Ley 1581 de 2012).</label>
+          <span class="error" data-error="acepta_datos" style="grid-column:1/-1"></span>
+        </div>
+        <div class="aviso aviso--error" data-aviso role="alert"></div>
+        <div class="formulario__pie">
+          <button class="btn btn--primario" type="submit">Enviar mensaje <%- icono('flecha', { size: 18 }) %></button>
+          <a class="btn btn--texto" href="<%= empresa.whatsappHref %>" target="_blank" rel="noopener">o escríbenos por WhatsApp <%- icono('whatsapp', { size: 18 }) %></a>
+        </div>
+      </form>
+
+      <div class="exito" data-exito>
+        <span class="icono-caja icono-caja--inverso"><%- icono('check', { size: 28 }) %></span>
+        <h3 class="h2">¡Mensaje enviado!</h3>
+        <p class="lead">Gracias por escribirnos. Tu solicitud quedó registrada con el número <strong data-exito-id></strong> y te contactaremos muy pronto.</p>
+        <div class="exito__acciones">
+          <a class="btn btn--whatsapp" data-exito-whatsapp href="<%= empresa.whatsappHref %>" target="_blank" rel="noopener">Continuar por WhatsApp <%- icono('whatsapp', { size: 18 }) %></a>
+          <a class="btn btn--secundario" href="/">Volver al inicio</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

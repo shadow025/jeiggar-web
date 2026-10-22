@@ -1,0 +1,55 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="hero-interno" style="padding-bottom:0">
+  <div class="container">
+    <nav class="migas" aria-label="Migas de pan"><a href="/">JEIGGAR</a><%- icono('chevron_der', { size: 14 }) %><span aria-current="page"><%= tipo === 'privacidad' ? 'Política de Privacidad' : 'Términos y Condiciones' %></span></nav>
+  </div>
+</section>
+
+<section class="container legal">
+  <% if (tipo === 'privacidad') { %>
+    <span class="eyebrow">Protección de datos</span>
+    <h1 class="h1">Política de Privacidad y Tratamiento de Datos Personales</h1>
+    <p><strong><%= empresa.nombreLargo %></strong>, con domicilio en <%= empresa.direccion %>, actúa como responsable del tratamiento de los datos personales recolectados a través de este sitio web, en cumplimiento de la Ley 1581 de 2012, el Decreto 1377 de 2013 y demás normas que los complementen.</p>
+    <h2>Datos que recolectamos</h2>
+    <ul>
+      <li>Datos de identificación: nombre completo, tipo y número de documento (cédula de ciudadanía, cédula de extranjería, NIT o pasaporte).</li>
+      <li>Datos de contacto: correo electrónico, teléfono o WhatsApp, empresa y ciudad.</li>
+      <li>Información sobre el proyecto, servicio o equipo de interés que el titular decida compartir.</li>
+      <li>Datos técnicos de la solicitud (fecha, dirección IP y navegador) con fines de seguridad.</li>
+    </ul>
+    <h2>Finalidades</h2>
+    <ul>
+      <li>Elaborar, emitir y enviar cotizaciones y propuestas comerciales a nombre del titular.</li>
+      <li>Responder solicitudes de contacto, información o alquiler de equipos.</li>
+      <li>Gestionar la relación comercial y contractual derivada de los servicios contratados.</li>
+      <li>Cumplir obligaciones legales, contables y tributarias.</li>
+    </ul>
+    <h2>Derechos del titular</h2>
+    <p>El titular puede conocer, actualizar, rectificar y suprimir sus datos, solicitar prueba de la autorización, ser informado sobre el uso dado a sus datos y revocar la autorización. Para ejercerlos puede escribir a <a href="mailto:<%= empresa.correo %>" style="text-decoration:underline"><%= empresa.correo %></a> o comunicarse al <%= empresa.telefono %>.</p>
+    <h2>Conservación y seguridad</h2>
+    <p>Los datos se conservan durante el tiempo necesario para cumplir las finalidades descritas y las obligaciones legales aplicables. Aplicamos medidas técnicas y administrativas razonables para proteger la información contra acceso no autorizado, pérdida o alteración.</p>
+    <p class="small">Última actualización: <%= new Date().toLocaleDateString('es-CO', { year: 'numeric', month: 'long' }) %>.</p>
+  <% } else { %>
+    <span class="eyebrow">Condiciones de uso</span>
+    <h1 class="h1">Términos y Condiciones</h1>
+    <p>El acceso y uso de este sitio web, operado por <strong><%= empresa.nombreLargo %></strong>, implica la aceptación de los presentes términos.</p>
+    <h2>Información y cotizaciones</h2>
+    <ul>
+      <li>La información publicada tiene carácter informativo. Las cotizaciones enviadas a través del sitio son solicitudes preliminares y no constituyen una oferta vinculante hasta que JEIGGAR emita una propuesta formal.</li>
+      <li>Los precios, disponibilidad de equipos y plazos están sujetos a confirmación.</li>
+    </ul>
+    <h2>Alquiler de equipos y herramientas</h2>
+    <ul>
+      <li>El alquiler se formaliza mediante contrato o acuerdo por escrito, previa verificación de identidad del solicitante.</li>
+      <li>El cliente responde por el buen uso y la devolución de los equipos en las condiciones pactadas.</li>
+    </ul>
+    <h2>Propiedad intelectual</h2>
+    <p>Los textos, marcas y diseños del sitio son propiedad de JEIGGAR o de sus respectivos titulares. Las fotografías de stock utilizadas pertenecen a sus autores bajo las licencias correspondientes.</p>
+    <h2>Contacto</h2>
+    <p>Para cualquier inquietud escríbenos a <a href="mailto:<%= empresa.correo %>" style="text-decoration:underline"><%= empresa.correo %></a>.</p>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

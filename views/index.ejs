@@ -1,0 +1,74 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="hero">
+  <div class="container hero__grid">
+    <div class="hero__texto">
+      <span class="eyebrow"><%= empresa.nombreLargo %></span>
+      <h1 class="display-xl"><%= pagina.hero.titulo[0] %><span class="texto-rojo"><%= pagina.hero.titulo[1] %></span><%= pagina.hero.titulo[2] %></h1>
+      <p class="lead"><%= pagina.hero.texto %></p>
+      <div class="hero__acciones">
+        <a class="btn btn--primario" href="/cotizar">¡Contáctanos! <%- icono('flecha', { size: 18 }) %></a>
+        <a class="btn btn--secundario" href="#servicios">Servicios <%- icono('flecha_abajo', { size: 18 }) %></a>
+      </div>
+    </div>
+    <div class="hero__medio">
+      <div class="marco-oscuro hero__video">
+        <img src="<%= pagina.hero.imagen %>" alt="Equipo de trabajadores de la construcción en obra" width="580" height="620" fetchpriority="high">
+        <span class="nota"><%- icono('play', { size: 16 }) %> Video de portada</span>
+      </div>
+      <div class="destacado-flotante">
+        <span class="icono-caja icono-caja--inverso"><%- icono(pagina.hero.destacado.icono, { size: 22 }) %></span>
+        <div><strong><%= pagina.hero.destacado.titulo %></strong><span><%= pagina.hero.destacado.texto %></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion" id="servicios">
+  <div class="container">
+    <div class="cabecera-seccion">
+      <h2 class="h2">Servicios</h2>
+      <a class="btn btn--secundario btn--sm" href="/servicios">Ver todos los servicios <%- icono('flecha', { size: 16 }) %></a>
+    </div>
+    <div class="grid grid--3">
+      <% pagina.serviciosInicio.map(site.getServicio).forEach((s) => { %>
+        <article class="tarjeta tarjeta-servicio">
+          <div class="tarjeta-servicio__imagen"><img src="<%= s.imagenInicio %>" alt="<%= s.nombre %>" loading="lazy" width="384" height="220"></div>
+          <div class="tarjeta-servicio__contenido">
+            <div class="tarjeta-servicio__cabecera">
+              <span class="icono-caja"><%- icono(s.icono, { size: 22 }) %></span>
+              <span class="btn-circulo" aria-hidden="true"><%- icono('flecha_diagonal', { size: 18 }) %></span>
+            </div>
+            <h3 class="h3"><a class="tarjeta-servicio__enlace" href="/servicios/<%= s.slug %>"><%= s.nombre === 'Remodelación de Edificaciones' ? 'Remodelación de edificaciones' : s.nombre === 'Movimiento de Tierras' ? 'Movimiento de tierras' : s.nombre === 'Elaboración de Presupuestos' ? 'Elaboración de presupuestos' : s.nombre === 'Adaptación de Contenedores' ? 'Adaptación de contenedores' : s.nombre %></a></h3>
+            <p class="small"><%= s.tarjetaInicio %></p>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="container">
+    <div class="panel">
+      <div class="panel__grid">
+        <div class="panel__texto">
+          <span class="eyebrow">JEIGGAR</span>
+          <h2 class="h2"><%= pagina.porQue.titulo %></h2>
+        </div>
+        <div class="lista-caracteristicas">
+          <% pagina.porQue.items.forEach((it) => { %>
+            <div class="caracteristica">
+              <span class="icono-caja"><%- icono(it.icono, { size: 22 }) %></span>
+              <div class="caracteristica__texto"><h3 class="h4"><%= it.titulo %></h3><p><%= it.texto %></p></div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/cta', { cta: pagina.cta }) %>
+<%- include('partials/footer') %>

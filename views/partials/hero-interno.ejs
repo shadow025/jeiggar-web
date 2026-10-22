@@ -1,0 +1,32 @@
+<%
+  // hero: { migas:[{href,etiqueta}], etiqueta, titulo, lema, imagen, alt, boton:{href,texto}|null, esVideo }
+%>
+<section class="hero-interno">
+  <div class="container">
+    <nav class="migas" aria-label="Migas de pan">
+      <a href="/">JEIGGAR</a>
+      <% (hero.migas || []).forEach((m) => { %>
+        <%- icono('chevron_der', { size: 14 }) %>
+        <% if (m.href) { %><a href="<%= m.href %>"><%= m.etiqueta %></a><% } else { %><span aria-current="page"><%= m.etiqueta %></span><% } %>
+      <% }) %>
+    </nav>
+    <div class="hero-interno__grid">
+      <div class="hero-interno__texto">
+        <span class="eyebrow"><%= hero.etiqueta || empresa.nombreLargo %></span>
+        <h1 class="h1"><%= hero.titulo %></h1>
+        <% if (hero.lema) { %><p class="lead"><%= hero.lema %></p><% } %>
+        <% if (hero.boton !== null) { const b = hero.boton || { href: '/cotizar', texto: '¡Contáctanos!' }; %>
+          <div><a class="btn btn--primario" href="<%= b.href %>"><%= b.texto %> <%- icono('flecha', { size: 18 }) %></a></div>
+        <% } %>
+      </div>
+      <% if (hero.esVideo) { %>
+        <div class="marco-oscuro hero-interno__imagen">
+          <img src="<%= hero.imagen %>" alt="<%= hero.alt || hero.titulo %>" width="560" height="440" fetchpriority="high">
+          <span class="nota"><%- icono('play', { size: 16 }) %> Video de portada</span>
+        </div>
+      <% } else { %>
+        <div class="hero-interno__imagen"><img src="<%= hero.imagen %>" alt="<%= hero.alt || hero.titulo %>" width="560" height="440" fetchpriority="high"></div>
+      <% } %>
+    </div>
+  </div>
+</section>

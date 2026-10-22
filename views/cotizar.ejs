@@ -1,0 +1,103 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="hero-interno" style="padding-bottom:40px">
+  <div class="container">
+    <nav class="migas" aria-label="Migas de pan"><a href="/">JEIGGAR</a><%- icono('chevron_der', { size: 14 }) %><span aria-current="page">Solicitar cotización</span></nav>
+    <div class="hero-interno__texto mt-24" style="max-width:760px">
+      <span class="eyebrow"><%= empresa.nombreLargo %></span>
+      <h1 class="h1">Solicita tu cotización</h1>
+      <p class="lead">Cuéntanos sobre tu proyecto o el equipo que necesitas. Con tus datos preparamos una cotización personalizada y te la enviamos al correo o WhatsApp.</p>
+    </div>
+  </div>
+</section>
+
+<section class="seccion" style="padding-top:0">
+  <div class="container cotizar">
+    <aside class="cotizar__lateral">
+      <div class="panel">
+        <span class="eyebrow">¿Cómo funciona?</span>
+        <div class="caracteristica"><span class="icono-caja"><%- icono('documento', { size: 20 }) %></span><div class="caracteristica__texto"><h2 class="h4">1. Envías tus datos</h2><p>Nombre, documento, contacto y una descripción breve de lo que necesitas.</p></div></div>
+        <div class="caracteristica"><span class="icono-caja"><%- icono('calculadora', { size: 20 }) %></span><div class="caracteristica__texto"><h2 class="h4">2. Preparamos la cotización</h2><p>Nuestro equipo revisa la solicitud y, si hace falta, te contacta para afinar detalles.</p></div></div>
+        <div class="caracteristica"><span class="icono-caja"><%- icono('rapidez', { size: 20 }) %></span><div class="caracteristica__texto"><h2 class="h4">3. Te respondemos</h2><p>Recibes la propuesta por correo o WhatsApp en el menor tiempo posible.</p></div></div>
+      </div>
+      <div class="tarjeta tarjeta-lema" style="min-height:0">
+        <%- icono('whatsapp', { size: 22 }) %>
+        <h2 class="h3">¿Prefieres hablar directo?</h2>
+        <p class="small" style="color:var(--text-inverse-muted)">Escríbenos por WhatsApp o llámanos al <%= empresa.telefono %>.</p>
+        <a class="btn btn--whatsapp" href="<%= empresa.whatsappHref %>" target="_blank" rel="noopener">WhatsApp <%- icono('whatsapp', { size: 18 }) %></a>
+      </div>
+    </aside>
+
+    <div class="panel cotizar__formulario">
+      <form class="formulario" id="form-cotizar" data-endpoint="/api/cotizaciones" novalidate>
+        <input type="hidden" name="origen" value="cotizar">
+        <div class="honeypot" aria-hidden="true"><label>Sitio web <input type="text" name="sitio_web" tabindex="-1" autocomplete="off"></label></div>
+
+        <h2 class="h3">Datos de contacto</h2>
+        <div class="formulario__fila">
+          <div class="campo"><label for="q-nombre">Nombre completo <span class="req">*</span></label><input id="q-nombre" name="nombre" type="text" autocomplete="name" required><span class="error" data-error="nombre"></span></div>
+          <div class="campo"><label for="q-empresa">Empresa (opcional)</label><input id="q-empresa" name="empresa" type="text" autocomplete="organization"></div>
+        </div>
+        <div class="campo">
+          <label for="q-documento">Documento de identidad <span class="req">*</span></label>
+          <div class="campo--doc">
+            <select id="q-tipo-doc" name="tipo_documento" aria-label="Tipo de documento" required>
+              <% site.tiposDocumento.forEach((t) => { %><option value="<%= t.valor %>"><%= t.etiqueta %></option><% }) %>
+            </select>
+            <input id="q-documento" name="documento" type="text" inputmode="numeric" autocomplete="off" placeholder="Número de documento" required>
+          </div>
+          <span class="ayuda">Lo usamos para emitir la cotización a tu nombre. Para empresas, escribe el NIT con dígito de verificación (ej. 900123456-7).</span>
+          <span class="error" data-error="documento"></span>
+        </div>
+        <div class="formulario__fila">
+          <div class="campo"><label for="q-correo">Correo electrónico <span class="req">*</span></label><input id="q-correo" name="correo" type="email" autocomplete="email" required><span class="error" data-error="correo"></span></div>
+          <div class="campo"><label for="q-telefono">Teléfono / WhatsApp <span class="req">*</span></label><input id="q-telefono" name="telefono" type="tel" autocomplete="tel" placeholder="301 665 1308" required><span class="error" data-error="telefono"></span></div>
+        </div>
+
+        <h2 class="h3 mt-16">Tu proyecto</h2>
+        <div class="formulario__fila">
+          <div class="campo">
+            <label for="q-servicio">Servicio de interés <span class="req">*</span></label>
+            <select id="q-servicio" name="servicio" required>
+              <option value="">Selecciona un servicio</option>
+              <% site.opcionesServicio.forEach((o) => { %><option value="<%= o.valor %>" <%= preseleccion.servicio === o.valor ? 'selected' : '' %>><%= o.etiqueta %></option><% }) %>
+            </select>
+            <span class="error" data-error="servicio"></span>
+          </div>
+          <div class="campo"><label for="q-ciudad">Ciudad del proyecto</label><input id="q-ciudad" name="ciudad" type="text" autocomplete="address-level2" placeholder="Cúcuta"></div>
+        </div>
+        <div class="campo <%= preseleccion.servicio === 'alquiler' ? '' : 'oculto' %>" id="campo-equipo">
+          <label for="q-equipo">Equipo o herramienta</label>
+          <input id="q-equipo" name="equipo" type="text" list="lista-equipos" value="<%= preseleccion.equipo %>" placeholder="Ej. Taladro, Motobomba…">
+          <datalist id="lista-equipos"><% site.alquiler.herramientas.forEach((h) => { %><option value="<%= h.nombre %>"></option><% }) %></datalist>
+        </div>
+        <div class="campo"><label for="q-mensaje">Descripción del proyecto o necesidad</label><textarea id="q-mensaje" name="mensaje" placeholder="Cuéntanos qué necesitas, medidas aproximadas, fechas, ubicación…"></textarea></div>
+
+        <div class="campo campo--check">
+          <input id="q-acepta" name="acepta_datos" type="checkbox" required>
+          <label for="q-acepta">Autorizo a <%= empresa.nombreLargo %> el tratamiento de mis datos personales (incluido mi documento de identidad) con la finalidad de elaborar y enviarme la cotización solicitada, conforme a la <a href="/politica-de-privacidad" target="_blank">Política de Privacidad</a> y la Ley 1581 de 2012.</label>
+          <span class="error" data-error="acepta_datos" style="grid-column:1/-1"></span>
+        </div>
+
+        <div class="aviso aviso--error" data-aviso role="alert"></div>
+        <div class="formulario__pie">
+          <button class="btn btn--primario" type="submit">Solicitar cotización <%- icono('flecha', { size: 18 }) %></button>
+          <span class="small"><span class="req">*</span> Campos obligatorios</span>
+        </div>
+      </form>
+
+      <div class="exito" data-exito>
+        <span class="icono-caja icono-caja--inverso"><%- icono('check', { size: 28 }) %></span>
+        <h2 class="h2">¡Solicitud recibida!</h2>
+        <p class="lead">Tu cotización quedó registrada con el número <strong data-exito-id></strong>. Te contactaremos al correo y teléfono que indicaste.</p>
+        <div class="exito__acciones">
+          <a class="btn btn--whatsapp" data-exito-whatsapp href="<%= empresa.whatsappHref %>" target="_blank" rel="noopener">Agilizar por WhatsApp <%- icono('whatsapp', { size: 18 }) %></a>
+          <a class="btn btn--secundario" href="/servicios">Ver más servicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

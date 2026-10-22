@@ -1,0 +1,56 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<%- include('partials/hero-interno', { hero: {
+  migas: [{ href: '/servicios', etiqueta: 'Servicios' }, { etiqueta: 'Diseños' }],
+  titulo: 'Diseños',
+  lema: pagina.lema,
+  imagen: pagina.portada,
+  esVideo: true,
+  boton: { href: '/cotizar?servicio=disenos', texto: '¡Contáctanos!' },
+} }) %>
+
+<section class="seccion">
+  <div class="container">
+    <div class="cabecera-seccion"><div class="texto"><span class="eyebrow"><%= pagina.intro.etiqueta %></span><h2 class="h2"><%= pagina.intro.titulo %></h2><p class="lead"><%= pagina.intro.texto %></p></div></div>
+    <div class="grid" style="gap:40px">
+      <% pagina.especialidades.forEach((e, i) => { %>
+        <div class="media <%= i % 2 ? 'media--invertido' : '' %>">
+          <div class="media__texto">
+            <span class="icono-caja"><%- icono(e.icono, { size: 22 }) %></span>
+            <h3 class="h2"><%= e.titulo %></h3>
+            <p class="lead"><%= e.texto %></p>
+            <ul class="lista-check">
+              <% e.items.forEach((t) => { %><li><%- icono('check', { size: 18 }) %><span><%= t %></span></li><% }) %>
+            </ul>
+          </div>
+          <div class="media__imagen <%= e.esVideo ? 'marco-oscuro' : '' %>">
+            <img src="<%= e.imagen %>" alt="<%= e.titulo %>" loading="lazy" width="720" height="450">
+            <% if (e.esVideo) { %><span class="nota"><%- icono('play', { size: 16 }) %> Video</span><% } %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="container">
+    <div class="panel">
+      <span class="eyebrow">Tecnología</span>
+      <h2 class="h2 mt-16"><%= pagina.tecnologias.titulo %></h2>
+      <p class="lead mt-16"><%= pagina.tecnologias.texto %></p>
+      <div class="grid grid--4 mt-32">
+        <% pagina.tecnologias.items.forEach((t) => { %>
+          <div class="caracteristica">
+            <span class="icono-caja"><%- icono(t.icono, { size: 22 }) %></span>
+            <div class="caracteristica__texto"><h3 class="h4"><%= t.titulo %></h3><p><%= t.texto %></p></div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/cta', { cta: pagina.cta, ctaServicio: 'disenos' }) %>
+<%- include('partials/footer') %>

@@ -1,0 +1,149 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<%- include('partials/hero-interno', { hero: {
+  migas: [{ href: '/servicios', etiqueta: 'Servicios' }, { etiqueta: servicio.nombre }],
+  titulo: servicio.tituloHero || servicio.nombre,
+  lema: servicio.lema,
+  imagen: servicio.portada,
+  boton: { href: '/cotizar?servicio=' + servicio.slug, texto: '¡Contáctanos!' },
+} }) %>
+
+<% if (servicio.intro) { %>
+<section class="seccion">
+  <div class="container intro-servicio">
+    <div class="intro-servicio__texto">
+      <span class="eyebrow"><%= servicio.intro.etiqueta %></span>
+      <p class="h3"><%= servicio.intro.texto %></p>
+    </div>
+    <div class="intro-servicio__imagen"><img src="<%= servicio.intro.imagen %>" alt="<%= servicio.nombre %>" loading="lazy" width="520" height="400"></div>
+  </div>
+</section>
+<% } %>
+
+<% servicio.secciones.forEach((sec, idx) => { %>
+  <% if (sec.tipo === 'tarjetas') { %>
+    <section class="seccion">
+      <div class="container">
+        <div class="cabecera-seccion"><div class="texto"><span class="eyebrow"><%= sec.etiqueta %></span><h2 class="h2"><%= sec.titulo %></h2></div></div>
+        <div class="grid grid--3">
+          <% sec.items.forEach((it) => { %>
+            <article class="tarjeta tarjeta-info">
+              <span class="icono-caja"><%- icono(it.icono, { size: 22 }) %></span>
+              <h3 class="h3"><%= it.titulo %></h3>
+              <p><%= it.texto %></p>
+            </article>
+          <% }) %>
+        </div>
+      </div>
+    </section>
+
+  <% } else if (sec.tipo === 'panel') { %>
+    <section class="seccion">
+      <div class="container">
+        <div class="panel">
+          <span class="eyebrow"><%= sec.etiqueta %></span>
+          <h2 class="h2 mt-16"><%= sec.titulo %></h2>
+          <div class="panel__cuadricula <%= sec.items.length === 3 ? 'panel__cuadricula--3' : '' %>">
+            <% sec.items.forEach((it) => { %>
+              <div class="caracteristica">
+                <span class="icono-caja"><%- icono(it.icono, { size: 22 }) %></span>
+                <div class="caracteristica__texto"><h3 class="h4"><%= it.titulo %></h3><p><%= it.texto %></p></div>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <% } else if (sec.tipo === 'pasos') { %>
+    <section class="seccion">
+      <div class="container">
+        <div class="cabecera-seccion"><div class="texto"><span class="eyebrow"><%= sec.etiqueta %></span><h2 class="h2"><%= sec.titulo %></h2></div></div>
+        <div class="grid grid--3">
+          <% sec.items.forEach((it, i) => { %>
+            <article class="tarjeta paso">
+              <span class="paso__numero">PASO <%= String(i + 1).padStart(2, '0') %></span>
+              <span class="icono-caja"><%- icono(it.icono, { size: 22 }) %></span>
+              <h3 class="h3"><%= it.titulo %></h3>
+              <p><%= it.texto %></p>
+            </article>
+          <% }) %>
+        </div>
+      </div>
+    </section>
+
+  <% } else if (sec.tipo === 'media') { %>
+    <section class="seccion">
+      <div class="container media <%= sec.invertido ? 'media--invertido' : '' %>">
+        <div class="media__texto">
+          <span class="eyebrow"><%= sec.etiqueta %></span>
+          <h2 class="h2"><%= sec.titulo %></h2>
+          <p class="lead"><%= sec.texto %></p>
+        </div>
+        <div class="media__imagen <%= sec.esVideo ? 'marco-oscuro' : '' %>">
+          <img src="<%= sec.imagen %>" alt="<%= sec.titulo %>" loading="lazy" width="720" height="450">
+          <% if (sec.esVideo) { %><span class="nota"><%- icono('play', { size: 16 }) %> Video</span><% } %>
+        </div>
+      </div>
+    </section>
+
+  <% } else if (sec.tipo === 'lista') { %>
+    <section class="seccion">
+      <div class="container media">
+        <div class="media__texto">
+          <span class="eyebrow"><%= sec.etiqueta %></span>
+          <h2 class="h2"><%= sec.titulo %></h2>
+          <p class="lead"><%= sec.texto %></p>
+          <ul class="lista-check">
+            <% sec.items.forEach((t) => { %><li><%- icono('check', { size: 18 }) %><span><%= t %></span></li><% }) %>
+          </ul>
+        </div>
+        <div class="media__imagen"><img src="<%= sec.imagen %>" alt="<%= sec.titulo %>" loading="lazy" width="720" height="450"></div>
+      </div>
+    </section>
+
+  <% } else if (sec.tipo === 'proyecto') { %>
+    <section class="seccion">
+      <div class="container">
+        <div class="panel">
+          <div class="proyecto-destacado">
+            <div class="proyecto-destacado__texto">
+              <span class="eyebrow"><%= sec.etiqueta %></span>
+              <p class="lead"><%= sec.intro %></p>
+              <h2 class="h2"><%= sec.titulo %></h2>
+              <p><%= sec.texto %></p>
+              <div class="datos">
+                <% sec.datos.forEach((d) => { %><div class="dato"><small><%= d.etiqueta %></small><strong><%= d.valor %></strong></div><% }) %>
+              </div>
+            </div>
+            <div>
+              <div class="media__imagen"><img src="<%= sec.imagen %>" alt="<%= sec.titulo %>" loading="lazy" width="560" height="350"></div>
+              <% if (sec.pie) { %><p class="small mono mt-16"><%= sec.pie %></p><% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <% } else if (sec.tipo === 'antes-despues') { %>
+    <section class="seccion">
+      <div class="container">
+        <div class="cabecera-seccion"><div class="texto"><span class="eyebrow"><%= sec.etiqueta %></span><h2 class="h2"><%= sec.titulo %></h2><p class="lead"><%= sec.texto %></p></div></div>
+        <div class="antes-despues" data-antes-despues>
+          <div class="antes-despues__marco">
+            <img data-cara="antes" src="<%= sec.antes %>" alt="Antes: <%= sec.titulo %>" loading="lazy" width="1200" height="750">
+            <img data-cara="despues" src="<%= sec.despues %>" alt="Después: <%= sec.titulo %>" loading="lazy" width="1200" height="750">
+          </div>
+          <div class="antes-despues__selector" role="group" aria-label="Antes / Después">
+            <button type="button" data-cara="antes" aria-pressed="true">Antes</button>
+            <button type="button" data-cara="despues" aria-pressed="false">Después</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  <% } %>
+<% }) %>
+
+<%- include('partials/cta', { cta: servicio.cta, ctaServicio: servicio.slug }) %>
+<%- include('partials/footer') %>

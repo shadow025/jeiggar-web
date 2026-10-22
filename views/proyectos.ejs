@@ -1,0 +1,62 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<%- include('partials/hero-interno', { hero: {
+  migas: [{ etiqueta: 'Proyectos' }],
+  titulo: 'Proyectos',
+  lema: pagina.lema,
+  imagen: pagina.portada,
+  esVideo: true,
+  boton: { href: '/cotizar', texto: '¡Contáctanos!' },
+} }) %>
+
+<section class="seccion" style="padding-top:0">
+  <div class="container">
+    <div class="cabecera-seccion"><div class="texto"><span class="eyebrow">Proyectos</span><h2 class="h2"><%= pagina.intro.titulo %></h2><p class="lead"><%= pagina.intro.texto %></p></div></div>
+    <div class="grid grid--2">
+      <% pagina.obras.forEach((o) => { %>
+        <article class="tarjeta tarjeta-servicio">
+          <div class="tarjeta-servicio__imagen <%= o.esVideo ? 'marco-oscuro' : '' %>" style="height:300px">
+            <img src="<%= o.imagen %>" alt="<%= o.titulo %>" loading="lazy" width="600" height="300">
+            <% if (o.esVideo) { %><span class="nota"><%- icono('play', { size: 16 }) %> Video</span><% } %>
+          </div>
+          <div class="tarjeta-servicio__contenido"><h3 class="h3"><%= o.titulo %></h3><p class="small"><%= o.texto %></p></div>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="container">
+    <div class="cabecera-seccion"><div class="texto"><span class="eyebrow">Destacados</span><h2 class="h2"><%= pagina.destacados.titulo %></h2><p class="lead"><%= pagina.destacados.texto %></p></div></div>
+    <div class="grid" style="gap:32px">
+      <% pagina.destacados.items.forEach((p, i) => { %>
+        <div class="panel">
+          <div class="proyecto-destacado">
+            <div class="antes-despues" data-antes-despues>
+              <div class="antes-despues__marco">
+                <img data-cara="antes" src="<%= p.antes %>" alt="Antes: <%= p.titulo %>" loading="lazy" width="1200" height="750">
+                <img data-cara="despues" src="<%= p.despues %>" alt="Después: <%= p.titulo %>" loading="lazy" width="1200" height="750">
+              </div>
+              <div class="antes-despues__selector" role="group" aria-label="Antes / Después">
+                <button type="button" data-cara="antes" aria-pressed="true">Antes</button>
+                <button type="button" data-cara="despues" aria-pressed="false">Después</button>
+              </div>
+            </div>
+            <div class="proyecto-destacado__texto">
+              <h3 class="h2"><%= p.titulo %></h3>
+              <p class="lead"><%= p.texto %></p>
+              <div class="datos">
+                <% p.datos.forEach((d) => { %><div class="dato"><small><%= d.etiqueta %></small><strong><%= d.valor %></strong></div><% }) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/cta', { cta: pagina.cta }) %>
+<%- include('partials/footer') %>

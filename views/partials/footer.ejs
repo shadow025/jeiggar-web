@@ -1,0 +1,46 @@
+</main>
+
+<footer class="pie">
+  <div class="container">
+    <div class="pie__columnas">
+      <div class="pie__marca">
+        <a class="logo logo--inverso" href="/">
+          <span class="logo__simbolo" aria-hidden="true">J</span>
+          <span class="logo__nombre"><strong>JEIGGAR</strong><small>INGENIERÍA Y CONSTRUCCIÓN</small></span>
+        </a>
+        <p><%= empresa.lema %></p>
+        <div class="pie__redes">
+          <a href="<%= empresa.facebook %>" target="_blank" rel="noopener" aria-label="Facebook"><%- icono('facebook', { size: 18 }) %></a>
+          <a href="<%= empresa.instagram %>" target="_blank" rel="noopener" aria-label="Instagram"><%- icono('instagram', { size: 18 }) %></a>
+          <a href="<%= empresa.whatsappHref %>" target="_blank" rel="noopener" aria-label="WhatsApp"><%- icono('whatsapp', { size: 18 }) %></a>
+        </div>
+      </div>
+      <div>
+        <h2 class="pie__titulo">Servicios</h2>
+        <ul class="pie__lista">
+          <% site.footerServicios.forEach((s) => { %><li><a href="<%= s.href %>"><%= s.etiqueta %></a></li><% }) %>
+        </ul>
+      </div>
+      <div>
+        <h2 class="pie__titulo">Contacto</h2>
+        <ul class="pie__lista">
+          <li><%- icono('ubicacion', { size: 18 }) %><span><%= empresa.direccion %></span></li>
+          <li><%- icono('telefono', { size: 18 }) %><a href="<%= empresa.telefonoHref %>"><%= empresa.telefono %></a></li>
+          <li><%- icono('correo', { size: 18 }) %><a href="mailto:<%= empresa.correo %>"><%= empresa.correo %></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pie__legal">
+      <div>© <%= new Date().getFullYear() %> <%= empresa.nombreLargo %>.<br>Todos los derechos reservados.</div>
+      <nav aria-label="Legal">
+        <a href="/politica-de-privacidad">Política de Privacidad</a>
+        <a href="/terminos-y-condiciones">Términos y Condiciones</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/main.js?v=<%= v %>" defer></script>
+<%- typeof scripts !== 'undefined' ? scripts : '' %>
+</body>
+</html>
